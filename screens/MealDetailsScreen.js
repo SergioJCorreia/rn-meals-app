@@ -1,17 +1,24 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 
 import { MEALS } from "../data/dummy-data";
+import MealDetails from "../components/MealDetails";
 
 const MealDetailsScreen = ({route}) => {
     const mealId = route.params.mealId;
-    const MealDetails = MEALS.find(mealItem => mealItem.id === mealId);
+    const mealDetails = MEALS.find(mealItem => mealItem.id === mealId);
 
     return (
         <View style={styles.container}>
-            <Text>Meal Details</Text>
-            <Text>This is the details Screen of {MealDetails.title}</Text>
+            <Image source={{uri: mealDetails.imageUrl}}/>
+            <Text>{mealDetails.title}</Text>
+            <MealDetails duration={mealDetails.duration} complexity={mealDetails.complexity}
+                         affordability={mealDetails.affordability}></MealDetails>
+            <Text>Ingredients</Text>
+            {mealDetails.ingredients.map((ingredient) => (<Text key={ingredient}>{ingredient}</Text>))}
+            <Text>Steps</Text>
+            {mealDetails.steps.map((step) => (<Text key={step}>{step}</Text>))}
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
